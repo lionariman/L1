@@ -5,7 +5,6 @@ import (
 	"math/rand/v2"
 	"os"
 	"strconv"
-	"sync"
 	"time"
 )
 
@@ -32,9 +31,9 @@ func main() {
 
 	mainChan := make(chan int)
 	// mt := &sync.Mutex{}
-	wg := &sync.WaitGroup{}
+	// wg := &sync.WaitGroup{}
 
-	wg.Add(workersNum)
+	// wg.Add(workersNum)
 
 	// workers
 	for i := range workersNum {

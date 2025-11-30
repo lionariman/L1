@@ -23,13 +23,13 @@ func main() {
 	
 }
 
-func swapByAddSubstruct(num1 *int, num2 *int) {
+func swapByAddSubstruct(num1, num2 *int) {
 	*num1 = *num1 + *num2
 	*num2 = *num1 - *num2
 	*num1 = *num1 - *num2
 }
 
-func swapByXOR(num1 *int, num2 *int) {
+func swapByXOR(num1, num2 *int) {
 	*num1 = *num1 ^ *num2
 	*num2 = *num1 ^ *num2
 	*num1 = *num1 ^ *num2

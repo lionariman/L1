@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
+	"sync/atomic"
+	// "time"
 )
 
 // Конкурентный счетчик
@@ -16,17 +17,17 @@ import (
 // например, sync.Mutex или sync/Atomic для безопасного инкремента.
 
 type Counter struct {
-	Count int
+	Count atomic.Int64
 }
 
 func (cn *Counter) Increment() {
-	cn.Count += 1
+	cn.Count.Add(1)
 }
 
 func main() {
-	counter := Counter{0}
+	counter := Counter{}
 	
-	mt := sync.Mutex{}
+	// mt := sync.Mutex{}
 	wg := sync.WaitGroup{}
 	
 	gnum := 3
@@ -36,15 +37,15 @@ func main() {
 	for i := range gnum {
 		go func(j int, cnt *Counter) {
 			defer wg.Done()
-			mt.Lock()
+			// mt.Lock()
 			cnt.Increment()
-			fmt.Println("Goroutine", j, " made increment >", cnt.Count)
-			time.Sleep(1 * time.Second)
-			mt.Unlock()
+			fmt.Println("Goroutine", j, " made increment >", cnt.Count.Load())
+			// time.Sleep(1 * time.Second)
+			// mt.Unlock()
 		}(i, &counter)
 	}
 	
 	wg.Wait()
 	
-	fmt.Println("Result of incrementation:", counter.Count)
+	fmt.Println("Result of incrementation:", counter.Count.Load())
 }

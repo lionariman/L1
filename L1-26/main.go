@@ -29,7 +29,7 @@ func main() {
 	// fmt.Println(byte('a')+32 - byte('A'))
 }
 
-// неэффективное решение, сложноность O(n)
+// эффективное решение, сложноность O(n)
 func unique(str string) bool {
 	seen := make(map[rune]bool)
 	for _, char := range strings.ToLower(str) {

@@ -22,13 +22,25 @@ import (
 // или цикл на проверку времени
 // (не лучший способ, но для обучения).
 
+// РЕШЕНИЕ ЧЕРЕЗ ЦИКЛ
+// func sleep(d time.Duration) {
+// 	done := make(chan struct{})
+// 	target := time.Now().UnixNano() + d.Nanoseconds()
+// 	go func() {
+// 		for {
+// 			if time.Now().UnixNano() >= target {
+// 				close(done)
+// 				break
+// 			}
+// 		}
+// 	}()
+// 	<-done
+// }
+
+// РЕШЕНИЕ ЧЕРЕЗ ТАЙМЕР
 func sleep(d time.Duration) {
-	target := time.Now().UnixNano() + d.Nanoseconds()
-	for {
-		if time.Now().UnixNano() >= target {
-			return
-		}
-	}
+    timer := time.NewTimer(d)
+    <-timer.C  // блокируется до истечения времени
 }
 
 func main() {
@@ -48,6 +60,4 @@ func main() {
 	}()
 	
 	wg.Wait()
-	
-	fmt.Println("yes")
 }
